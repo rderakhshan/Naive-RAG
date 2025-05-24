@@ -1,8 +1,8 @@
 import streamlit as st
-from srsc.codes.naiverag import process_documents, query_documents, generate_response
+from srsc.codes.naiverag import query_documents, generate_response # process_documents
 
 # Set page title
-st.title("RAG Chat Application with ChromaDB and OpenAI")
+st.title("RAG Chat")
 
 # Initialize session state for document processing and chat history
 if "documents_processed" not in st.session_state:
@@ -14,14 +14,14 @@ if "messages" not in st.session_state:
 directory_path = "./srsc/docpool"  # Replace with your actual directory path
 
 # Process documents once when the app starts
-if not st.session_state.documents_processed:
-    with st.spinner("Processing documents..."):
-        try:
-            process_documents(directory_path)
-            st.session_state.documents_processed = True
-            st.success("Documents processed successfully!")
-        except Exception as e:
-            st.error(f"Error processing documents: {e}")
+# if not st.session_state.documents_processed:
+#     with st.spinner("Processing documents..."):
+#         try:
+#             process_documents(directory_path)
+#             st.session_state.documents_processed = True
+#             st.success("Documents processed successfully!")
+#         except Exception as e:
+#             st.error(f"Error processing documents: {e}")
 
 # Display chat history
 for message in st.session_state.messages:
