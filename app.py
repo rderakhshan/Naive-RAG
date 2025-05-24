@@ -18,7 +18,7 @@ openai_ef      = embedding_functions.OpenAIEmbeddingFunction(
 
 # Initialize ChromaDB client with persistance
 chroma_client = chromadb.PersistentClient(
-    path               = "/Users/vahid/Documents/AI-Apps/Naive RAG/srsc/database/chromadb_persistence",)
+    path               = "./srsc/database/chromadb_persistence",)
 
 # Create or get a collection
 collection             = chroma_client.get_or_create_collection(
@@ -52,5 +52,5 @@ def load_documents_from_directory(directory_path: str) -> list:
                 documents.append(file.read())
     return documents
 
-existing_documents = load_documents_from_directory("/Users/vahid/Documents/AI-Apps/Naive RAG/srsc/documents")
+existing_documents = load_documents_from_directory("./srsc/documents")
 print(f"Loaded {len(existing_documents)} documents from the directory.")
