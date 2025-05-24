@@ -12,7 +12,31 @@ if not openai_api_key:
     raise EnvironmentError("OPENAI_API_KEY not found in .env file")
 
 # initialize OpenAI embedding function
-openai_ef = embedding_functions.OpenAIEmbeddingFunction(
-    api_key=openai_api_key,
-    model_name="text-embedding-3-small")
+openai_ef      = embedding_functions.OpenAIEmbeddingFunction(
+    api_key    = openai_api_key,
+    model_name = "text-embedding-3-small")
 
+# Initialize ChromaDB client with persistance
+chroma_client = chromadb.PersistentClient(
+    path               = "/Users/vahid/Documents/AI-Apps/Naive RAG/srsc/database/chromadb_persistence",
+)
+
+# Create or get a collection
+collection             = chroma_client.get_or_create_collection(
+    name               = "documents_table",
+    embedding_function = openai_ef,
+)
+
+
+# OpenAI client initialization
+client = OpenAI(api_key = openai_api_key)
+
+response = client.chat.completions.create(
+    model = "gpt-3.5-turbo",
+    messages = [
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "What is the capital of France?"}
+    ]
+)
+
+print(response.choices[0].message.content)
